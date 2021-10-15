@@ -1,24 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { cyan, blue, indigo, grey } from '@mui/material/colors';
+import { 
+  Container,
+  CssBaseline,
+  responsiveFontSizes,
+  Divider,
+  ThemeProvider,
+  unstable_createMuiStrictModeTheme as createMuiTheme } from '@mui/material';
+  import Welcome from './home/Welcome';
+  import Projects from './home/Projects';
+  import Navbar from './layout/Navbar';
+  import Contact from './home/Contact';
 
 function App() {
+
+  const [darkState, setDarkState] = useState(false);
+
+  const paletteType = darkState ? 'dark' : 'light';
+  const mainPrimary = darkState ? grey[50] : blue[700];
+  const mainSecondary = darkState ? cyan[300] : indigo[900];
+
+  let theme = createMuiTheme({
+    palette: {
+      mode: paletteType,
+      primary: {
+        main: mainPrimary
+      },
+      secondary: {
+        main: mainSecondary
+      }
+    }
+  });
+
+  theme = responsiveFontSizes(theme);
+
+  const handleThemeChange = () => {
+    setDarkState(!darkState);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <ThemeProvider theme={theme}>
+      <CssBaseline />
+
+      <Navbar 
+        isChecked={darkState}
+        isChanged={handleThemeChange}
+      />
+
+      <Container>
+        <Welcome />
+        <Divider style={{backgroundColor: theme.palette.secondary.main}} />
+         <Projects />
+        <Divider style={{backgroundColor: theme.palette.secondary.main}} />
+        <Contact />
+      </Container>
+      
+    </ThemeProvider>
   );
 }
 
