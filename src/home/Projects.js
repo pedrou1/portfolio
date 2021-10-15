@@ -13,14 +13,20 @@ const styles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: theme.spacing(0),
     },
-    toolbar: theme.mixins.toolbar
+    toolbar: {
+        margin: theme.spacing(4, 0, 4),
+    }
 }))
 
 const Projects = () => {
 
     const classes = styles();
+
+    const projects = [
+        ]
 
     return (
         <Box
@@ -39,10 +45,10 @@ const Projects = () => {
                 alignItems='center'
                 spacing={5} >
                 {
-                    [0, 1, 2, 3, 4, 5].map((value) => (
+                    projects.map((value) => (
                         <Grid key={value} item xs={12} sm={4}>
                             <Box textAlign='center'>
-                                <ProjectCard />
+                                <ProjectCard project={value} />
                             </Box>
                         </Grid>
                     ))
